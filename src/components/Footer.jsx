@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CalendarCheck, MessageCircle, Globe, Mail } from 'lucide-react';
 
 const Footer = () => {
