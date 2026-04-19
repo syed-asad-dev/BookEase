@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { CalendarCheck, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { CalendarCheck, MessageCircle, Globe, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -18,13 +17,13 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-bg-surface flex items-center justify-center text-text-secondary hover:text-primary hover:bg-bg-surface transition-all">
-                <Instagram size={18} />
+                <MessageCircle size={18} />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-bg-surface flex items-center justify-center text-text-secondary hover:text-primary hover:bg-bg-surface transition-all">
-                <Facebook size={18} />
+                <Globe size={18} />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-bg-surface flex items-center justify-center text-text-secondary hover:text-primary hover:bg-bg-surface transition-all">
-                <Linkedin size={18} />
+                <Mail size={18} />
               </a>
             </div>
           </div>
