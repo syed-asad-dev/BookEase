@@ -1,38 +1,12 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const bcrypt = require('bcryptjs');
+
+const User = require('./backend/models/User');
+const Service = require('./backend/models/Service');
+const Staff = require('./backend/models/Staff');
 
 dotenv.config();
-
-// Define schemas inline to avoid CJS/ESM conflicts with backend models
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, default: 'admin' }
-}, { timestamps: true });
-
-const serviceSchema = new mongoose.Schema({
-  serviceId: { type: String, required: true, unique: true },
-  serviceName: { type: String, required: true },
-  duration: { type: Number, required: true },
-  price: { type: Number, required: true },
-  description: { type: String },
-  isActive: { type: Boolean, default: true }
-}, { timestamps: true });
-
-const staffSchema = new mongoose.Schema({
-  staffId: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  specialty: { type: String, required: true },
-  workingDays: { type: [String], required: true },
-  workingHours: { start: String, end: String },
-  slotDuration: { type: Number, default: 30 },
-  isActive: { type: Boolean, default: true }
-}, { timestamps: true });
-
-const User = mongoose.models.User || mongoose.model('User', userSchema);
-const Service = mongoose.models.Service || mongoose.model('Service', serviceSchema);
-const Staff = mongoose.models.Staff || mongoose.model('Staff', staffSchema);
 
 const seedData = async () => {
   try {
