@@ -1,36 +1,61 @@
 @import "tailwindcss";
 @theme {
   --color-primary: #7C3AED;
+  --color-primary-light: #A78BFA;
   --color-primary-dark: #5B21B6;
   --color-accent: #F59E0B;
+  --color-bg: #F0EEFF;
+  --color-bg-blob: #E2D9FF;
   --color-bg-dark: #0D0D1A;
   --color-bg-card: #1A1A2E;
   --color-bg-surface: #16213E;
+  --color-text-dark: #1E1B4B;
+  --color-text-gray: #6B7280;
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #A0A0B8;
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
-  --font-heading: "Playfair Display", serif;
-  --font-body: "DM Sans", sans-serif;
+  --color-border: #E5E7EB;
+  --color-card-white: #FFFFFF;
+  --font-heading: "Sora", sans-serif;
+  --font-body: "Nunito", sans-serif;
 }
 
 @layer base {
-
   body {
-    @apply bg-bg-dark text-text-primary font-body antialiased;
+    @apply font-body antialiased;
     margin: 0;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-wide;
+    @apply font-heading;
   }
 }
 
 @layer components {
+  /* === PUBLIC SITE STYLES === */
+  .btn-primary-new {
+    @apply bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-[0_4px_14px_rgba(124,58,237,0.3)] hover:shadow-[0_6px_20px_rgba(124,58,237,0.45)] hover:-translate-y-0.5;
+  }
+
+  .btn-outline-new {
+    @apply bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-8 rounded-full transition-all duration-300;
+  }
+
+  .card-white {
+    @apply bg-white rounded-2xl border border-border transition-all duration-300;
+    box-shadow: 0 4px 24px rgba(124,58,237,0.08);
+  }
+
+  .card-white:hover {
+    box-shadow: 0 8px 32px rgba(124,58,237,0.14);
+  }
+
+  /* === ADMIN DARK THEME STYLES (unchanged) === */
   .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(245,158,11,0.5)] border border-transparent hover:border-accent;
+    @apply bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(124,58,237,0.5)] border border-transparent;
   }
   
   .btn-outline {
@@ -52,57 +77,94 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark); 
+  background: #F0EEFF; 
 }
  
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-surface); 
+  background: #D4C8F5; 
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary); 
+  background: #7C3AED; 
 }
 
-/* Base Calendar styles overrides (for react-calendar) */
+/* === Public Pages: Calendar component on Booking page === */
 .react-calendar {
   width: 100% !important;
-  background: var(--bg-card) !important;
-  border: 1px solid var(--bg-surface) !important;
-  font-family: 'DM Sans', sans-serif !important;
-  color: white !important;
-  border-radius: 0.5rem;
+  background: white !important;
+  border: 1px solid #E5E7EB !important;
+  font-family: 'Nunito', sans-serif !important;
+  color: #1E1B4B !important;
+  border-radius: 1rem;
   padding: 1rem;
 }
 .react-calendar__navigation button {
-  color: white !important;
+  color: #1E1B4B !important;
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 600;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: var(--primary) !important;
+  background-color: #7C3AED !important;
+  color: white !important;
+  border-radius: 0.5rem;
 }
 .react-calendar__month-view__weekdays {
-  color: var(--text-secondary);
-  font-weight: 500;
+  color: #6B7280;
+  font-weight: 600;
   text-transform: uppercase;
+  font-size: 0.75rem;
 }
 .react-calendar__tile {
-  color: white;
+  color: #1E1B4B;
+  border-radius: 0.5rem;
 }
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: var(--bg-surface) !important;
+  background-color: #F0EEFF !important;
   border-radius: 0.5rem;
 }
 .react-calendar__tile--active {
-  background: var(--primary) !important;
+  background: #7C3AED !important;
   color: white !important;
   border-radius: 0.5rem;
 }
 .react-calendar__tile--now {
-  background: rgba(124, 58, 237, 0.2) !important;
+  background: rgba(124, 58, 237, 0.1) !important;
   border-radius: 0.5rem;
 }
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #4B5563 !important;
+  color: #D1D5DB !important;
+}
+
+/* Hero floating animation */
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+
+.hero-float {
+  animation: heroFloat 6s ease-in-out infinite;
+}
+
+.hero-float-delayed {
+  animation: heroFloat 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Blob animations */
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  33% { transform: scale(1.05) translate(10px, -10px); }
+  66% { transform: scale(0.95) translate(-5px, 5px); }
+}
+
+.blob-animate {
+  animation: blobPulse 12s ease-in-out infinite;
+}
+
+.blob-animate-delayed {
+  animation: blobPulse 12s ease-in-out infinite;
+  animation-delay: 4s;
 }
