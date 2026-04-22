@@ -1,20 +1,42 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const bcrypt = require('bcryptjs');
-
-// Models
-const User = require('./backend/models/User');
-const Service = require('./backend/models/Service');
-const Staff = require('./backend/models/Staff');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
+// Define schemas inline to avoid CJS/ESM conflicts with backend models
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, default: 'admin' }
+}, { timestamps: true });
+
+const serviceSchema = new mongoose.Schema({
+  serviceId: { type: String, required: true, unique: true },
+  serviceName: { type: String, required: true },
+  duration: { type: Number, required: true },
+  price: { type: Number, required: true },
+  description: { type: String },
+  isActive: { type: Boolean, default: true }
+}, { timestamps: true });
+
+const staffSchema = new mongoose.Schema({
+  staffId: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  specialty: { type: String, required: true },
+  workingDays: { type: [String], required: true },
+  workingHours: { start: String, end: String },
+  slotDuration: { type: Number, default: 30 },
+  isActive: { type: Boolean, default: true }
+}, { timestamps: true });
+
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+const Service = mongoose.models.Service || mongoose.model('Service', serviceSchema);
+const Staff = mongoose.models.Staff || mongoose.model('Staff', staffSchema);
+
 const seedData = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB Connected');
 
     // 1. Create Admin User
@@ -26,7 +48,7 @@ const seedData = async () => {
       password: hashedPassword,
       role: 'admin'
     });
-    console.log('Admin user created');
+    console.log('Admin user created (admin / Admin@123)');
 
     // 2. Create Services
     await Service.deleteMany({});
@@ -38,7 +60,7 @@ const seedData = async () => {
       { serviceId: 'SRV-05', serviceName: 'Skin Consultation', duration: 45, price: 1500, description: 'Dermatologist skin review' },
     ];
     await Service.insertMany(services);
-    console.log('Services created');
+    console.log('5 Services created');
 
     // 3. Create Staff
     await Staff.deleteMany({});
@@ -69,9 +91,9 @@ const seedData = async () => {
       }
     ];
     await Staff.insertMany(staff);
-    console.log('Staff created');
+    console.log('3 Staff members created');
 
-    console.log('Seed completed successfully!');
+    console.log('\n✅ Seed completed successfully!');
     process.exit();
   } catch (error) {
     console.error('Seed Error:', error);
