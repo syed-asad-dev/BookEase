@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
 
 export const AuthContext = createContext();
 
@@ -8,28 +7,24 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('bookease_token');
-    const username = localStorage.getItem('bookease_username');
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
     if (token && username) {
       setUser({ username, token });
-      // Set default auth header for all requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
     setLoading(false);
   }, []);
 
   const login = (token, username) => {
-    localStorage.setItem('bookease_token', token);
-    localStorage.setItem('bookease_username', username);
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
     setUser({ username, token });
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   };
 
   const logout = () => {
-    localStorage.removeItem('bookease_token');
-    localStorage.removeItem('bookease_username');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
     setUser(null);
-    delete axios.defaults.headers.common['Authorization'];
   };
 
   return (
