@@ -17,7 +17,7 @@ const Staff = () => {
 
   const load = async () => {
     setLoading(true);
-    try { setStaff((await api.get('/staff')).data); } catch { toast.error('Failed to load staff'); }
+    try { setStaff((await api.get('/api/staff')).data); } catch { toast.error('Failed to load staff'); }
     finally { setLoading(false); }
   };
 
@@ -31,15 +31,15 @@ const Staff = () => {
     e.preventDefault();
     if (form.workingDays.length === 0) return toast.error('Select at least one working day');
     try {
-      if (editingId) { await api.put(`/staff/${editingId}`, form); toast.success('Updated'); }
-      else { await api.post('/staff', form); toast.success('Added'); }
+      if (editingId) { await api.put(`/api/staff/${editingId}`, form); toast.success('Updated'); }
+      else { await api.post('/api/staff', form); toast.success('Added'); }
       setShowModal(false); load();
     } catch (err) { toast.error(err.response?.data?.message || 'Error'); }
   };
 
   const del = async (id) => {
     if (!window.confirm('Delete this staff member?')) return;
-    try { await api.delete(`/staff/${id}`); toast.success('Deleted'); load(); } catch { toast.error('Failed'); }
+    try { await api.delete(`/api/staff/${id}`); toast.success('Deleted'); load(); } catch { toast.error('Failed'); }
   };
 
   const toggleDay = (d) => setForm(p => ({ ...p, workingDays: p.workingDays.includes(d) ? p.workingDays.filter(x => x !== d) : [...p.workingDays, d] }));

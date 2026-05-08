@@ -20,7 +20,7 @@ const Login = () => {
     if (!username || !password) return toast.error('Please enter all fields');
     setIsSubmitting(true);
     try {
-      const res = await api.post('/auth/login', { username, password });
+      const res = await api.post('/api/auth/login', { username, password });
       login(res.data.token, res.data.username);
       toast.success('Logged in successfully');
       navigate('/admin/dashboard');

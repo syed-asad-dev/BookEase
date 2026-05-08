@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'bookease-secret-key-123';
+const JWT_SECRET = process.env.JWT_SECRET || 'bookease_secure_secret_key_123';
 
 const protect = (req, res, next) => {
   let token;

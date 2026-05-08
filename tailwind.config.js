@@ -6,19 +6,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)',
-        'primary-dark': 'var(--primary-dark)',
-        accent: 'var(--accent)',
-        'bg-dark': 'var(--bg-dark)',
-        'bg-card': 'var(--bg-card)',
-        'bg-surface': 'var(--bg-surface)',
-        success: 'var(--success)',
-        warning: 'var(--warning)',
-        danger: 'var(--danger)',
+        primary: '#7C3AED',
+        'primary-light': '#A78BFA',
+        'primary-dark': '#5B21B6',
+        'primary-pale': '#EDE9FE',
+        success: '#10B981',
+        warning: '#F59E0B',
+        danger: '#EF4444',
+        accent: '#F59E0B',
       },
       fontFamily: {
-        heading: ['"Playfair Display"', 'serif'],
-        body: ['"DM Sans"', 'sans-serif'],
+        heading: ['"Sora"', 'sans-serif'],
+        body: ['"Nunito"', 'sans-serif'],
       }
     },
   },

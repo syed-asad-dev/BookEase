@@ -3,7 +3,7 @@ import { Calendar, Clock, ShoppingBag, Users, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
 
-const ab = '#0F0E17', ac = '#1E1C2A', abr = 'rgba(255,255,255,0.06)', amt = '#9CA3AF';
+const ac = '#1E1C2A', abr = 'rgba(255,255,255,0.06)', amt = '#9CA3AF';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({ today: 0, week: 0, total: 0, pending: 0 });
@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const res = await api.get('/appointments');
+      const res = await api.get('/api/appointments');
       const apps = res.data;
       const todayStr = new Date().toISOString().split('T')[0];
       const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);

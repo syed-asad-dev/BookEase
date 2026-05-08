@@ -16,7 +16,7 @@ const Services = () => {
 
   const load = async () => {
     setLoading(true);
-    try { setServices((await api.get('/services')).data); } catch { toast.error('Failed to load'); }
+    try { setServices((await api.get('/api/services')).data); } catch { toast.error('Failed to load'); }
     finally { setLoading(false); }
   };
 
@@ -29,15 +29,15 @@ const Services = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      if (editingId) { await api.put(`/services/${editingId}`, form); toast.success('Updated'); }
-      else { await api.post('/services', form); toast.success('Created'); }
+      if (editingId) { await api.put(`/api/services/${editingId}`, form); toast.success('Updated'); }
+      else { await api.post('/api/services', form); toast.success('Created'); }
       setShowModal(false); load();
     } catch (err) { toast.error(err.response?.data?.message || 'Error'); }
   };
 
   const del = async (id) => {
     if (!window.confirm('Delete this service?')) return;
-    try { await api.delete(`/services/${id}`); toast.success('Deleted'); load(); } catch { toast.error('Failed'); }
+    try { await api.delete(`/api/services/${id}`); toast.success('Deleted'); load(); } catch { toast.error('Failed'); }
   };
 
   return (

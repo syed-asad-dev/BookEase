@@ -6,6 +6,10 @@ const bcrypt = require('bcryptjs');
 
 dotenv.config();
 
+// Verify environment variables are loaded
+console.log('[BookEase] MONGODB_URI:', process.env.MONGODB_URI ? 'SET ✓' : 'NOT SET ✗');
+console.log('[BookEase] JWT_SECRET:', process.env.JWT_SECRET ? 'SET ✓' : 'NOT SET ✗');
+
 const app = express();
 
 app.use(cors());

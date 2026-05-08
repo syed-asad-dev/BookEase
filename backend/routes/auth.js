@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'bookease-secret-key-123';
+const JWT_SECRET = process.env.JWT_SECRET || 'bookease_secure_secret_key_123';
 
 // Login route
 router.post('/login', async (req, res) => {

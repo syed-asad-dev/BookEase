@@ -19,7 +19,7 @@ const CalendarView = () => {
 
   const load = async () => {
     try {
-      const res = await api.get('/appointments');
+      const res = await api.get('/api/appointments');
       setEvents(res.data.map(a => {
         const d = new Date(a.appointmentDate).toISOString().split('T')[0];
         const [h, m] = a.appointmentTime.split(':');

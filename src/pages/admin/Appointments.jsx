@@ -10,23 +10,23 @@ const Appointments = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-  useEffect(() => { fetch(); }, []);
+  useEffect(() => { fetchAppointments(); }, []);
 
-  const fetch = async () => {
+  const fetchAppointments = async () => {
     setLoading(true);
-    try { const r = await api.get('/appointments'); setAppointments(r.data.sort((a,b) => new Date(b.appointmentDate) - new Date(a.appointmentDate))); }
+    try { const r = await api.get('/api/appointments'); setAppointments(r.data.sort((a,b) => new Date(b.appointmentDate) - new Date(a.appointmentDate))); }
     catch { toast.error('Failed to load appointments'); }
     finally { setLoading(false); }
   };
 
   const updateStatus = async (id, status) => {
-    try { await api.patch(`/appointments/${id}`, { status }); toast.success('Status updated'); fetch(); }
+    try { await api.patch(`/api/appointments/${id}`, { status }); toast.success('Status updated'); fetchAppointments(); }
     catch { toast.error('Failed to update'); }
   };
 
   const del = async (id) => {
     if (!window.confirm('Delete this appointment?')) return;
-    try { await api.delete(`/appointments/${id}`); toast.success('Deleted'); fetch(); }
+    try { await api.delete(`/api/appointments/${id}`); toast.success('Deleted'); fetchAppointments(); }
     catch { toast.error('Failed to delete'); }
   };
 
