@@ -25,8 +25,8 @@ const Booking = () => {
   const [confirmed, setConfirmed] = useState(null);
 
   useEffect(() => {
-    api.get('/services').then(r => setServices((r.data||[]).filter(s => s.isActive !== false))).catch(() => {});
-    api.get('/staff').then(r => setStaff((r.data||[]).filter(s => s.isActive !== false))).catch(() => {});
+    api.get('/api/services').then(r => setServices((r.data||[]).filter(s => s.isActive !== false))).catch(err => console.error('Services error:', err));
+    api.get('/api/staff').then(r => setStaff((r.data||[]).filter(s => s.isActive !== false))).catch(err => console.error('Staff error:', err));
   }, []);
 
   useEffect(() => { if (selStf && selDate) fetchSlots(); }, [selStf, selDate]);
@@ -34,7 +34,7 @@ const Booking = () => {
   const fetchSlots = async () => {
     setSlotsLoading(true); setSelTime(null);
     try {
-      const res = await api.get(`/availability?staffId=${selStf._id}&date=${selDate.toISOString().split('T')[0]}`);
+      const res = await api.get(`/api/availability?staffId=${selStf._id}&date=${selDate.toISOString().split('T')[0]}`);
       setSlots(res.data);
     } catch { toast.error('Error fetching availability'); }
     finally { setSlotsLoading(false); }
@@ -51,7 +51,7 @@ const Booking = () => {
     if (!client.name || !client.phone || !client.email) return toast.error('Please fill in all required fields');
     setLoading(true);
     try {
-      const res = await api.post('/appointments', { clientName: client.name, clientPhone: client.phone, clientEmail: client.email, service: selSvc._id, staff: selStf._id, appointmentDate: selDate, appointmentTime: selTime, notes: client.notes });
+      const res = await api.post('/api/appointments', { clientName: client.name, clientPhone: client.phone, clientEmail: client.email, service: selSvc._id, staff: selStf._id, appointmentDate: selDate, appointmentTime: selTime, notes: client.notes });
       setConfirmed(res.data); toast.success('Appointment booked successfully!');
     } catch { toast.error('Failed to book appointment'); }
     finally { setLoading(false); }

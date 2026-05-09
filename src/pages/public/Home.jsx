@@ -27,8 +27,8 @@ const Home = () => {
   const [ct, setCt] = useState(0);
 
   useEffect(() => {
-    api.get('/services').then(r => setServices((r.data || []).filter(s => s.isActive !== false))).catch(() => {});
-    api.get('/staff').then(r => setStaff((r.data || []).filter(s => s.isActive !== false))).catch(() => {});
+    api.get('/api/services').then(r => setServices((r.data || []).filter(s => s.isActive !== false))).catch(err => console.error('Services fetch error:', err));
+    api.get('/api/staff').then(r => setStaff((r.data || []).filter(s => s.isActive !== false))).catch(err => console.error('Staff fetch error:', err));
   }, []);
 
   useEffect(() => {
