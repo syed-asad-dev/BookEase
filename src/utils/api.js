@@ -4,6 +4,7 @@ const api = axios.create({
   baseURL: '',
 });
 
+// Attach adminToken to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('adminToken');
   if (token) {
@@ -11,5 +12,21 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Auto-redirect to login on 401 (expired/invalid token)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUsername');
+      // Only redirect if on an admin page (don't break public pages)
+      if (window.location.pathname.startsWith('/admin') && !window.location.pathname.includes('/login')) {
+        window.location.href = '/admin/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;
